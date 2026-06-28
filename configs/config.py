@@ -23,9 +23,12 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 DATA_DIR = PROJECT_ROOT / "data"
 
-RAW_DATA_DIR = DATA_DIR / "raw"
-PROCESSED_DATA_DIR = DATA_DIR / "processed"
-MANIFEST_DIR = DATA_DIR / "manifests"
+# RAW_DATA_DIR = DATA_DIR / "raw"
+RAW_DATA_DIR = Path("/content/drive/MyDrive/ISTVT/data/raw")
+# PROCESSED_DATA_DIR = DATA_DIR / "processed"
+PROCESSED_DATA_DIR = Path("/content/drive/MyDrive/ISTVT/data/processed")
+# MANIFEST_DIR = DATA_DIR / "manifests"
+MANIFEST_DIR = Path("/content/drive/MyDrive/ISTVT/data/manifests")
 
 CHECKPOINT_DIR = PROJECT_ROOT / "checkpoints"
 OUTPUT_DIR = PROJECT_ROOT / "outputs"
@@ -35,10 +38,14 @@ OUTPUT_DIR = PROJECT_ROOT / "outputs"
 # Update these according to your system.
 # =============================================================================
 
+# RAW_PATHS = {
+#     "ff": "/path/to/FaceForensics++",
+#     "celebdf": "/path/to/Celeb-DF-v2",
+#     "dfdc": "/path/to/DFDC"
+# }
+
 RAW_PATHS = {
-    "ff": "/path/to/FaceForensics++",
-    "celebdf": "/path/to/Celeb-DF-v2",
-    "dfdc": "/path/to/DFDC"
+    "ff": "/content/drive/MyDrive/ISTVT/data/raw/FaceForensics++_C23",
 }
 
 # =============================================================================

@@ -198,33 +198,40 @@ def process_video(video_path, output_dir, mtcnn):
 
 def process_dataset():
     """
-    Process every video under RAW_DATA_DIR.
+    Process the FaceForensics++ dataset.
+
+    original/                 -> processed/real/
+    all manipulated folders   -> processed/fake/
     """
 
     mtcnn = create_mtcnn()
 
-    video_extensions = {
-        ".mp4",
-        ".avi",
-        ".mov",
-        ".mkv",
-    }
+    real_dir = Path(RAW_PATHS["ff"]) / "original"
 
-    videos = []
+    fake_dirs = [
+        "Deepfakes",
+        "Face2Face",
+        "FaceSwap",
+        "NeuralTextures",
+        "FaceShifter",
+        "DeepFakeDetection",
+    ]
 
-    for ext in video_extensions:
-        videos.extend(RAW_DATA_DIR.rglob(f"*{ext}"))
+    # --------------------------------------------------
+    # Process REAL videos
+    # --------------------------------------------------
 
-    print(f"Found {len(videos)} videos.")
+    real_videos = sorted(real_dir.glob("*.mp4"))
+    real_videos = real_videos[:10]
 
-    for video in tqdm(videos):
+    print(f"Found {len(real_videos)} real videos.")
 
-        relative = video.relative_to(RAW_DATA_DIR)
+    for video in tqdm(real_videos, desc="Real"):
 
         output_dir = (
-            PROCESSED_DATA_DIR /
-            relative.parent /
-            video.stem
+            PROCESSED_DATA_DIR
+            / "real"
+            / video.stem
         )
 
         process_video(
@@ -233,7 +240,33 @@ def process_dataset():
             mtcnn,
         )
 
-    print("Preprocessing complete.")
+    # --------------------------------------------------
+    # Process FAKE videos
+    # --------------------------------------------------
 
+    for folder in fake_dirs:
+
+        folder_path = Path(RAW_PATHS["ff"]) / folder
+
+        fake_videos = sorted(folder_path.glob("*.mp4"))
+        fake_videos = fake_videos[:10]
+
+        print(f"Found {len(fake_videos)} videos in {folder}")
+
+        for video in tqdm(fake_videos, desc=folder):
+
+            output_dir = (
+                PROCESSED_DATA_DIR
+                / "fake"
+                / f"{folder}_{video.stem}"
+            )
+
+            process_video(
+                video,
+                output_dir,
+                mtcnn,
+            )
+
+    print("\nPreprocessing complete.")
 if __name__ == "__main__":
     process_dataset()

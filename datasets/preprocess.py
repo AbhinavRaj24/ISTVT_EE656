@@ -30,6 +30,7 @@ from configs.config import (
     FACE_CROP_SCALE,
     DEVICE,
     RAW_DATA_DIR,
+    RAW_PATHS,
     PROCESSED_DATA_DIR,
 )
 

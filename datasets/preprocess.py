@@ -41,7 +41,7 @@ def create_mtcnn():
 
     return MTCNN()
 
-def extract_frames(video_path, max_frames=270):
+def extract_frames(video_path, max_frames=150):
     """
     Read at most max_frames uniformly sampled frames from a video.
     """

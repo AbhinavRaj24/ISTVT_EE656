@@ -41,18 +41,35 @@ def create_mtcnn():
 
     return MTCNN()
 
-def extract_frames(video_path):
+def extract_frames(video_path, max_frames=270):
     """
-    Read all frames from a video.
-
-    Returns
-    -------
-    List[np.ndarray]
+    Read at most max_frames uniformly sampled frames from a video.
     """
 
     cap = cv2.VideoCapture(str(video_path))
 
+    total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+
+    if total_frames <= 0:
+        cap.release()
+        return []
+
+    # Uniformly sample indices
+    if total_frames <= max_frames:
+        frame_indices = set(range(total_frames))
+    else:
+        frame_indices = set(
+            np.linspace(
+                0,
+                total_frames - 1,
+                max_frames,
+                dtype=int,
+            )
+        )
+
     frames = []
+
+    current = 0
 
     while True:
 
@@ -61,12 +78,16 @@ def extract_frames(video_path):
         if not success:
             break
 
-        frame = cv2.cvtColor(
-            frame,
-            cv2.COLOR_BGR2RGB,
-        )
+        if current in frame_indices:
 
-        frames.append(frame)
+            frame = cv2.cvtColor(
+                frame,
+                cv2.COLOR_BGR2RGB,
+            )
+
+            frames.append(frame)
+
+        current += 1
 
     cap.release()
 

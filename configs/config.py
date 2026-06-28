@@ -26,7 +26,8 @@ DATA_DIR = PROJECT_ROOT / "data"
 # RAW_DATA_DIR = DATA_DIR / "raw"
 RAW_DATA_DIR = Path("/content/drive/MyDrive/ISTVT/data/raw")
 # PROCESSED_DATA_DIR = DATA_DIR / "processed"
-PROCESSED_DATA_DIR = Path("/content/drive/MyDrive/ISTVT/data/processed")
+# PROCESSED_DATA_DIR = Path("/content/drive/MyDrive/ISTVT/data/processed")
+PROCESSED_DATA_DIR = Path("/content/processed")
 # MANIFEST_DIR = DATA_DIR / "manifests"
 MANIFEST_DIR = Path("/content/drive/MyDrive/ISTVT/data/manifests")
 

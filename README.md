@@ -172,15 +172,11 @@ Spatial attention models relationships **within a single frame**.
 
 For query **Q**, key **K**, and value **V**
 
-[
-Attention(Q,K,V)
-================
+The attention operation is computed as
 
-Softmax
-\left(
-\frac{QK^T}{\sqrt{d}}
-\right)V
-]
+```text
+Attention(Q, K, V) = Softmax((QKᵀ)/√d) V
+```
 
 Multi-head attention enables the network to attend to different facial regions simultaneously.
 
@@ -192,9 +188,9 @@ Unlike conventional temporal attention, ISTVT introduces the **Self-Subtract mec
 
 Residual features are computed as
 
-[
-R_t = X_t - X_{t-1}
-]
+```text
+Rₜ = Xₜ − Xₜ₋₁
+```
 
 These residual representations emphasize temporal inconsistencies introduced by deepfake manipulation.
 

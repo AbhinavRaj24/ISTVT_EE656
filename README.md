@@ -416,54 +416,37 @@ including
 
 ---
 
-# Mathematical Summary
+## Mathematical Summary
 
 For each frame
 
-[
-F_i
-===
+```text
+F_i = Xception(I_i)
+```
 
-Xception(I_i)
-]
+Spatial Attention
 
-Spatial attention
+```text
+S_i = Attention(F_i)
+```
 
-[
-S_i
-===
+Temporal Residual
 
-Attention(F_i)
-]
+```text
+R_t = F_t − F_(t−1)
+```
 
-Temporal residual
+Temporal Attention
 
-[
-R_t
-===
-
-F_t-F_{t-1}
-]
-
-Temporal attention
-
-[
-T
-=
-
-Attention(R)
-]
+```text
+T = Attention(R)
+```
 
 Classification
 
-[
-y
-=
-
-MLP(T)
-]
-
----
+```text
+y = MLP(T)
+```---
 
 # Future Improvements
 

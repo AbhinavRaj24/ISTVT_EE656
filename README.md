@@ -446,7 +446,8 @@ Classification
 
 ```text
 y = MLP(T)
-```---
+```
+---
 
 # Future Improvements
 

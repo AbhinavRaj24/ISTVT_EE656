@@ -26,8 +26,8 @@ DATA_DIR = PROJECT_ROOT / "data"
 # RAW_DATA_DIR = DATA_DIR / "raw"
 RAW_DATA_DIR = Path("/content/drive/MyDrive/ISTVT/data/raw")
 # PROCESSED_DATA_DIR = DATA_DIR / "processed"
-# PROCESSED_DATA_DIR = Path("/content/drive/MyDrive/ISTVT/data/processed")
-PROCESSED_DATA_DIR = Path("/content/processed")
+PROCESSED_DATA_DIR = Path("/content/drive/MyDrive/ISTVT/data/processed")
+# PROCESSED_DATA_DIR = Path("/content/processed")
 # MANIFEST_DIR = DATA_DIR / "manifests"
 MANIFEST_DIR = Path("/content/drive/MyDrive/ISTVT/data/manifests")
 
@@ -72,8 +72,8 @@ NUM_HEADS = 8              # Number of attention heads (N)
 
 # Paper:
 # D = C / N
-# DIM_HEAD = EMBED_DIM // NUM_HEADS   # 728 / 8 = 91
-DIM_HEAD = 64
+DIM_HEAD = EMBED_DIM // NUM_HEADS   # 728 / 8 = 91
+# DIM_HEAD = 64
 # Face preprocessing
 FACE_CROP_SCALE = 1.25
 
@@ -109,7 +109,7 @@ BATCH_SIZE = 4
 # Simulates batch size = 16
 GRAD_ACCUM_STEPS = 4
 
-NUM_WORKERS = 4
+NUM_WORKERS = 2
 
 PIN_MEMORY = True
 
@@ -125,6 +125,7 @@ CROSS_TEST_DATASETS = [
     "celebdf",
     "dfdc"
 ]
+
 
 # =============================================================================
 # MANIFEST FILES

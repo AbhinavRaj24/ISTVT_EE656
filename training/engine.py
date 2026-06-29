@@ -9,7 +9,6 @@ ISTVT paper.
 """
 
 from pathlib import Path
-from sched import scheduler
 
 import torch
 from tqdm import tqdm

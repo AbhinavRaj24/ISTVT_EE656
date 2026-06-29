@@ -7,6 +7,7 @@ PyTorch Dataset for ISTVT.
 Loads sequences of six consecutive face images.
 """
 
+import pandas as pd
 from pathlib import Path
 
 from PIL import Image
@@ -24,11 +25,15 @@ class ISTVTDataset(Dataset):
 
     def __init__(
         self,
+        manifest,
         root=PROCESSED_DATA_DIR,
         transform=None,
     ):
         self.root = Path(root)
+        self.manifest = Path(manifest)
+        self.samples = []
 
+        self._scan_videos()
         self.transform = transform
 
         if self.transform is None:
@@ -37,52 +42,32 @@ class ISTVTDataset(Dataset):
                 transforms.ToTensor(),
             ])
 
-        self.samples = []
-
-        self._scan_videos()
 
     def _scan_videos(self):
         """
-        Scan the processed dataset directory and build all valid
-        six-frame sequences.
-
-        Expected directory structure:
-
-        processed/
-            real/
-                video_1/
-                    000000.jpg
-                    ...
-            fake/
-                video_2/
-                    000000.jpg
-                    ...
+        Read the manifest and build all valid sequences.
         """
 
-        if not self.root.exists():
+        if not self.manifest.exists():
             raise FileNotFoundError(
-                f"Processed dataset not found: {self.root}"
+                f"Manifest not found: {self.manifest}"
             )
 
-        classes = {
-            "real": 0,
-            "fake": 1,
-        }
+        df = pd.read_csv(self.manifest)
 
-        for class_name, label in classes.items():
+        for _, row in df.iterrows():
 
-            class_dir = self.root / class_name
+            video_dir = self.root / row["video"]
 
-            if not class_dir.exists():
+            label = int(row["label"])
+
+            if not video_dir.exists():
                 continue
 
-            for video_dir in sorted(class_dir.iterdir()):
-
-                if not video_dir.is_dir():
-                    continue
-
-                self._build_sequences(video_dir, label)
-
+            self._build_sequences(
+                video_dir,
+                label,
+            )
 
     def _build_sequences(self, video_dir, label):
         """

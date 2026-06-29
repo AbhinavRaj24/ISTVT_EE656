@@ -5,8 +5,6 @@ train.py
 Training script for ISTVT.
 """
 
-from sklearn import metrics
-from sklearn import metrics
 import torch
 import torch.nn as nn
 
@@ -22,6 +20,8 @@ from configs.config import (
     WEIGHT_DECAY,
     EPOCHS,
     CHECKPOINT_DIR,
+    TRAIN_MANIFEST,
+    VAL_MANIFEST,
 )
 
 from datasets.dataset import ISTVTDataset
@@ -45,7 +45,9 @@ def main():
     # Dataset
     # --------------------------------------------------
 
-    train_dataset = ISTVTDataset()
+    train_dataset = ISTVTDataset(TRAIN_MANIFEST)
+
+    val_dataset = ISTVTDataset(VAL_MANIFEST)
 
     train_loader = DataLoader(
         train_dataset,
@@ -55,15 +57,16 @@ def main():
         pin_memory=True,
     )
 
-    # For now use same dataset.
-    # Later we'll split into train / validation.
     val_loader = DataLoader(
-        train_dataset,
+        val_dataset,
         batch_size=BATCH_SIZE,
         shuffle=False,
         num_workers=NUM_WORKERS,
         pin_memory=True,
     )
+
+    print(f"Train sequences : {len(train_dataset)}")
+    print(f"Validation sequences : {len(val_dataset)}")
 
     # --------------------------------------------------
     # Model
@@ -125,6 +128,7 @@ def main():
             criterion,
             DEVICE,
         )
+
         metrics = compute_metrics(
             y_true,
             y_pred,
@@ -136,6 +140,7 @@ def main():
         print(f"Train Loss : {train_loss:.4f}")
         print(f"Val Loss   : {val_loss:.4f}")
         print(f"Val Acc    : {val_acc:.4f}")
+
         print_metrics(metrics)
 
         if val_acc > best_acc:

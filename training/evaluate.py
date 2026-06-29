@@ -28,7 +28,9 @@ def compute_metrics(
     Parameters
     ----------
     y_true : np.ndarray
+
     y_pred : np.ndarray
+
     y_score : np.ndarray
         Probability of the fake class.
 
@@ -36,6 +38,17 @@ def compute_metrics(
     -------
     dict
     """
+
+    # ROC-AUC requires both classes to be present.
+    # Small validation sets may occasionally contain
+    # only one class.
+    try:
+        auc = roc_auc_score(
+            y_true,
+            y_score,
+        )
+    except ValueError:
+        auc = 0.0
 
     metrics = {
 
@@ -62,10 +75,7 @@ def compute_metrics(
             zero_division=0,
         ),
 
-        "auc": roc_auc_score(
-            y_true,
-            y_score,
-        ),
+        "auc": auc,
 
         "confusion_matrix": confusion_matrix(
             y_true,
@@ -91,5 +101,4 @@ def print_metrics(metrics):
     print(f"ROC AUC  : {metrics['auc']:.4f}")
 
     print("\nConfusion Matrix")
-
     print(metrics["confusion_matrix"])

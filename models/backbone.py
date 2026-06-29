@@ -23,10 +23,7 @@ import torch.nn as nn
 import torch.utils.model_zoo as model_zoo
 
 
-# -----------------------------------------------------------------------------
 # Depthwise Separable Convolution
-# -----------------------------------------------------------------------------
-
 
 class SeparableConv2d(nn.Module):
     """
@@ -68,11 +65,7 @@ class SeparableConv2d(nn.Module):
         x = self.pointwise(x)
         return x
 
-
-# -----------------------------------------------------------------------------
 # Residual Block
-# -----------------------------------------------------------------------------
-
 
 class Block(nn.Module):
     """
@@ -151,11 +144,7 @@ class Block(nn.Module):
         x = self.rep(x)
         return x + residual
 
-
-# -----------------------------------------------------------------------------
 # Xception Entry Flow
-# -----------------------------------------------------------------------------
-
 
 class XceptionBackbone(nn.Module):
     """

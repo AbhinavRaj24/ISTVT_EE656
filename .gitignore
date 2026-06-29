@@ -1,0 +1,48 @@
+# Python
+
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual Environments
+
+venv/
+.venv/
+env/
+
+# IDE
+
+.vscode/
+.idea/
+
+# Jupyter
+
+.ipynb_checkpoints/
+
+# OS Files
+
+.DS_Store
+Thumbs.db
+
+# Checkpoints & Outputs
+
+checkpoints/*
+outputs/*
+
+# Keep folders in git
+!checkpoints/.gitkeep
+!outputs/.gitkeep
+
+# Logs
+
+*.log
+
+# Pytest
+
+.pytest_cache/
+
+# Misc
+
+*.swp
+*.tmp

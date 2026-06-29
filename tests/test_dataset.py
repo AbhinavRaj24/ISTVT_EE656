@@ -7,9 +7,7 @@ from PIL import Image
 from datasets.dataset import ISTVTDataset
 
 
-# --------------------------------------------------
 # Create a temporary fake dataset
-# --------------------------------------------------
 
 with tempfile.TemporaryDirectory() as tmp:
 
@@ -32,9 +30,7 @@ with tempfile.TemporaryDirectory() as tmp:
             video / f"{i:06d}.jpg"
         )
 
-    # --------------------------------------------------
     # Create manifest
-    # --------------------------------------------------
 
     manifest = root / "train.csv"
 
@@ -52,9 +48,7 @@ with tempfile.TemporaryDirectory() as tmp:
         index=False,
     )
 
-    # --------------------------------------------------
     # Dataset
-    # --------------------------------------------------
 
     dataset = ISTVTDataset(
         manifest=manifest,

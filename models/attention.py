@@ -89,10 +89,8 @@ class SpatialOnlyAttention(AttentionBase):
         assert x.shape[1] == SEQ_LEN * tokens_per_frame, (
             f"Expected {SEQ_LEN * tokens_per_frame} tokens, got {x.shape[1]}"
         )
-        # --------------------------------------------------
-        # Linear projection
-        # --------------------------------------------------
 
+        # Linear projection
         qkv = self.to_qkv(x).chunk(3, dim=-1)
 
         q, k, v = map(
@@ -106,9 +104,7 @@ class SpatialOnlyAttention(AttentionBase):
             qkv,
         )
 
-        # --------------------------------------------------
         # Spatial attention
-        # --------------------------------------------------
 
         scores = torch.matmul(
             q,
@@ -119,9 +115,7 @@ class SpatialOnlyAttention(AttentionBase):
 
         out = torch.matmul(attention, v)
 
-        # --------------------------------------------------
         # Merge heads
-        # --------------------------------------------------
 
         out = rearrange(
             out,
@@ -177,10 +171,8 @@ class TemporalResidualAttention(AttentionBase):
         assert x.shape[1] == SEQ_LEN * tokens_per_frame, (
             f"Expected {SEQ_LEN * tokens_per_frame} tokens, got {x.shape[1]}"
         )
-        # --------------------------------------------------
-        # Compute temporal residual
-        # --------------------------------------------------
 
+        # Compute temporal residual
         x = rearrange(
             x,
             "b (t n) c -> b t n c",
@@ -206,9 +198,7 @@ class TemporalResidualAttention(AttentionBase):
             "b t n c -> b (t n) c",
         )
 
-        # --------------------------------------------------
         # Q,K from residual
-        # --------------------------------------------------
 
         qk = self.to_qk(residual).chunk(2, dim=-1)
 
@@ -223,9 +213,7 @@ class TemporalResidualAttention(AttentionBase):
             qk,
         )
 
-        # --------------------------------------------------
         # V from original features
-        # --------------------------------------------------
 
         v = self.to_v(x)
 
@@ -237,9 +225,7 @@ class TemporalResidualAttention(AttentionBase):
             h=self.heads,
         )
 
-        # --------------------------------------------------
         # Temporal attention
-        # --------------------------------------------------
 
         scores = torch.matmul(
             q,
@@ -250,9 +236,7 @@ class TemporalResidualAttention(AttentionBase):
 
         out = torch.matmul(attention, v)
 
-        # --------------------------------------------------
         # Merge heads
-        # --------------------------------------------------
 
         out = rearrange(
             out,

@@ -115,10 +115,8 @@ def crop_face(frame, mtcnn):
 
     if len(results) == 0:
         return None
-
-    # --------------------------------------------------
+    
     # Select largest detected face
-    # --------------------------------------------------
 
     largest = max(
         results,

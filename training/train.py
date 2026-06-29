@@ -41,10 +41,8 @@ from training.evaluate import (
 
 def main():
 
-    # --------------------------------------------------
     # Dataset
-    # --------------------------------------------------
-
+ 
     train_dataset = ISTVTDataset(TRAIN_MANIFEST)
 
     val_dataset = ISTVTDataset(VAL_MANIFEST)
@@ -68,23 +66,17 @@ def main():
     print(f"Train sequences : {len(train_dataset)}")
     print(f"Validation sequences : {len(val_dataset)}")
 
-    # --------------------------------------------------
     # Model
-    # --------------------------------------------------
 
     model = ISTVT()
 
     model.to(DEVICE)
 
-    # --------------------------------------------------
     # Loss
-    # --------------------------------------------------
 
     criterion = nn.CrossEntropyLoss()
 
-    # --------------------------------------------------
     # Optimizer
-    # --------------------------------------------------
 
     optimizer = SGD(
         model.parameters(),
@@ -93,9 +85,7 @@ def main():
         weight_decay=WEIGHT_DECAY,
     )
 
-    # --------------------------------------------------
     # Warmup Scheduler
-    # --------------------------------------------------
 
     scheduler = LinearLR(
         optimizer,
@@ -103,9 +93,7 @@ def main():
         total_iters=5,
     )
 
-    # --------------------------------------------------
     # Training Loop
-    # --------------------------------------------------
 
     best_acc = 0.0
 
